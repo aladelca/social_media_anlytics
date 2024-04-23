@@ -59,15 +59,17 @@ def find_image_filename(key_date, image_list):
             return filename
     return None 
 
-def load_and_prepare_images(df, image_size=(128, 128)):
+def load_and_prepare_images(df, column_name, image_size=(128, 128)):
     images = []
-    for img_path in df['img_source']:
+    for img_path in df[column_name]:
         img = Image.open(img_path)
         img = img.resize(image_size, Image.Resampling.LANCZOS)
         img = np.array(img)
         img = img.astype('float32') / 255.0  # Normalizar a [0, 1]
         images.append(img)
     return np.array(images)
+
+
 
 def preprocessing(influencer):
     df = get_dataframe(influencer)
